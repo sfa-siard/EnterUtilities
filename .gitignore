@@ -1,4 +1,3 @@
-# http://server.cytex.ch:4000/siard2/enterutils.git
 # ignore all build directories
 /build/**
 # ignore javadoc folder
