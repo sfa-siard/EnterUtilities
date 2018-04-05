@@ -1,7 +1,6 @@
 /*== Glue.java =========================================================
 Implements access to private members of classes. 
-Version     : $Id: Glue.java 49 2015-02-26 08:34:20Z hartwigthomas $
-Application : EnterAccess JDBC driver
+Application : Utilities
 Description : Implements access to private members of classes. 
 ------------------------------------------------------------------------
 Copyright  : 2014, Enter AG, Zurich, Switzerland
