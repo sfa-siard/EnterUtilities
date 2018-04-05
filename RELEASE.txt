@@ -1,0 +1,5 @@
+Release Notes for EnterUtilities 2.0
+====================================
+
+2.0.1:
+- First release of EnterUtilities 2.0 on GitLab.
