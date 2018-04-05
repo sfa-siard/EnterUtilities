@@ -184,7 +184,7 @@ public class Bundle
   /*------------------------------------------------------------------*/
   /** Returns a set of keys in this string pool, including distinct keys 
    * in the default string pool if a key of the same name has not already 
-   * been found from the main string pool.<br/>
+   * been found from the main string pool.<br>
    * The returned set is not backed by the Bundle instance object. 
    * Changes to this Bundle are not reflected in the set, or vice versa.
    * @return a set of keys in this string pool, including the keys in the 
