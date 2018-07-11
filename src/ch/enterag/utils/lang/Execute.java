@@ -70,6 +70,7 @@ public class Execute
    * as strings otherwise.
    * @param sVersion1 first version string to be compared.
    * @param sVersion2 second version string to be compared.
+   * @return true, if sVersion1 is less than sVersion2.
    */
   public static boolean ltVersion(String sVersion1, String sVersion2)
   {
