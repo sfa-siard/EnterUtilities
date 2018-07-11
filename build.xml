@@ -267,6 +267,7 @@ Created    : 09.05.2016, Hartwig Thomas
     <javadoc 
     	access="public" 
     	author="true" 
+    	additionalparam="&quot;-html5&quot;"
     	destdir="${dirjavadoc}" 
     	doctitle="SQL Parser" 
       packagenames="${packages}"
