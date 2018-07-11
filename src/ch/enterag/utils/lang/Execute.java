@@ -10,6 +10,7 @@ Created    : 27.11.2007, Hartwig Thomas
 package ch.enterag.utils.lang;
 
 import java.io.*;
+import java.util.*;
 import ch.enterag.utils.logging.*;
 
 /*====================================================================*/
@@ -35,10 +36,92 @@ public class Execute
   private int _iResult = -1;
   /** @return result of last execute. */
   public int getResult() { return _iResult; }
+
+  /*------------------------------------------------------------------*/
+  /** split a version string into parts separated by non-alphanumeric
+   * characters.
+   * @param sVersion: version string.
+   * @return list of parts.
+   */
+  private static List<String> splitVersion(String sVersion)
+  {
+    List<String> listVersion = new ArrayList<String>();
+    String sPart = "";
+    for (int i = 0; i < sVersion.length(); i++)
+    {
+      char c = sVersion.charAt(i);
+      if (Character.isLetterOrDigit(c))
+        sPart = sPart + c;
+      else
+      {
+        if (sPart.length() > 0)
+          listVersion.add(sPart);
+        sPart = "";
+      }
+    }
+    if (sPart.length() > 0)
+      listVersion.add(sPart);
+    return listVersion;
+  } /* splitVersion */
+  
+  /*------------------------------------------------------------------*/
+  /** leVersion returns true, if sVersion1 is less than sVersion2.
+   * The version parts are compared as integers, if they are integers and
+   * as strings otherwise.
+   * @param sVersion1 first version string to be compared.
+   * @param sVersion2 second version string to be compared.
+   */
+  public static boolean ltVersion(String sVersion1, String sVersion2)
+  {
+    boolean bEqual = true;
+    boolean bLess = false;
+    List<String> listVersion1 = splitVersion(sVersion1);
+    List<String> listVersion2 = splitVersion(sVersion2);
+    for (int i = 0; bEqual && (i < listVersion1.size()) && (i < listVersion2.size()); i++)
+    {
+      String s1 = listVersion1.get(i);
+      String s2 = listVersion2.get(i);
+      int comp = s1.compareTo(s2);
+      try
+      {
+        int i1 = Integer.parseInt(s1);
+        int i2 = Integer.parseInt(s2);
+        comp = Integer.compare(i1, i2); 
+      }
+      catch (NumberFormatException nfe) {}
+      if (comp < 0)
+      {
+        bLess = true;
+        bEqual = false;
+      }
+      else
+      {
+        bLess = false;
+        if (comp != 0)
+          bEqual = false;
+      }
+    }
+    return bLess;
+  } /* ltVersion */
+  
+  /*------------------------------------------------------------------*/
+  /** compares the current run-time JAVA version with the given version.
+   * N.B.: The leading "1." was dropped with JAVA 9!
+   * @param version to be compared. 
+   * @return true, if the runtime JAVA version is less than the given one
+   */
+  public static boolean isJavaVersionLessThan(String sVersion)
+  {
+    String sJavaVersion = System.getProperty("java.version");
+    if (sJavaVersion.startsWith("1."))
+      sJavaVersion = sJavaVersion.substring(2);
+    if (sVersion.startsWith("1."))
+      sVersion = sVersion.substring(2);
+    return ltVersion(System.getProperty("java.version"), sVersion);
+  } /* isJavaVersionLessThan */
   
 	/*------------------------------------------------------------------*/
-  /** returns true, if the OS is Windows.
-   * @return true, if the OS is Windows.
+  /** @return true, if the OS is Windows.
   */
   public static boolean isOsWindows()
   {
@@ -50,8 +133,7 @@ public class Execute
   } /* isOsWindows */
 
   /*------------------------------------------------------------------*/
-  /** returns true, if the OS is LINUX.
-   * @return true, if the OS is LINUX.
+  /** @return true, if the OS is LINUX.
   */
   public static boolean isOsLinux()
   {
