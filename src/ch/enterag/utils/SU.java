@@ -6,22 +6,6 @@ Description : SU implements a number of often used string utilities.
 ------------------------------------------------------------------------
 Copyright  : Enter AG, Zurich, Switzerland, 2008
 Created    : 15.02.2008, Hartwig Thomas
-------------------------------------------------------------------------
-The class ch.enterag.utils.BU is free software; you can redistribute it
-and/or modify it under the terms of the GNU General Public License 
-version 2 or later as published by the Free Software Foundation.
-
-ch.enterag.utils.BU is distributed in the hope that it will 
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
-of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-If you have a need for licensing ch.enterag.utils.BU without 
-some of the restrictions specified in the GNU General Public License,
-it is possible to negotiate a different license with the copyright holder.
 ======================================================================*/
 
 package ch.enterag.utils;
