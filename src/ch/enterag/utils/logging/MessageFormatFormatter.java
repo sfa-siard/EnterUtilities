@@ -10,22 +10,6 @@ Description : MessageFormatFormatter implements a simple customizable formatter.
 ------------------------------------------------------------------------
 Copyright  : 2010, Enter AG, Zurich, Switzerland
 Created    : 16.04.2010, Hartwig Thomas
-------------------------------------------------------------------------
-The class ch.enterag.utils.logging.MessageFormatFormatter is free software; 
-you can redistribute it and/or modify it under the terms of the GNU General 
-Public License version 2 or later as published by the Free Software Foundation.
-
-ch.enterag.utils.logging.MessageFormatFormatter is distributed in the hope that it will 
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
-of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-If you have a need for licensing ch.enterag.utils.logging.MessageFormatFormatter without 
-some of the restrictions specified in the GNU Lesser General Public License,
-it is possible to negotiate a different license with the copyright holder.
 ======================================================================*/
 
 package ch.enterag.utils.logging;
