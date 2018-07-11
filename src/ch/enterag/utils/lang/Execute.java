@@ -107,7 +107,7 @@ public class Execute
   /*------------------------------------------------------------------*/
   /** compares the current run-time JAVA version with the given version.
    * N.B.: The leading "1." was dropped with JAVA 9!
-   * @param version to be compared. 
+   * @param sVersion: version to be compared. 
    * @return true, if the runtime JAVA version is less than the given one
    */
   public static boolean isJavaVersionLessThan(String sVersion)
