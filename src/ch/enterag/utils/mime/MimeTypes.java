@@ -599,6 +599,7 @@ public class MimeTypes
     _mapMimeTypeExtensions.put("application/zip", "zip");
     _mapMimeTypeExtensions.put("audio/adpcm", "adp");
     _mapMimeTypeExtensions.put("audio/basic", "au");
+    _mapMimeTypeExtensions.put("audio/flac", "flac");
     _mapMimeTypeExtensions.put("audio/midi", "mid");
     _mapMimeTypeExtensions.put("audio/mp4", "m4a");
     _mapMimeTypeExtensions.put("audio/mpeg", "mpga");
