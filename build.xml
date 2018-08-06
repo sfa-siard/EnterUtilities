@@ -85,6 +85,7 @@ Created    : 09.05.2016, Hartwig Thomas
             <isset property="version"/>
             <isset property="revold"/>
             <isset property="java8rtjar"/>
+          	<isset property="javadocadd"/>
           </and>
         </not>
       </condition>
@@ -267,7 +268,7 @@ Created    : 09.05.2016, Hartwig Thomas
     <javadoc 
     	access="public" 
     	author="true" 
-    	additionalparam="&quot;-html5&quot;"
+    	additionalparam="${javadocadd}"
     	destdir="${dirjavadoc}" 
     	doctitle="SQL Parser" 
       packagenames="${packages}"
