@@ -36,6 +36,8 @@ java8rtjar=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/
 git=/usr/bin/git
 
 #------------------------------------------------------------------------
-# value of additionalparam for javadoc (must be empty for JDK 1.8 and
+# value of additionalparam for javadoc8
+ (must be empty for JDK 1.8 and
 # -html5 for later versions.
 javadocadd=-html5
+#javadocadd=
