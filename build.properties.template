@@ -34,3 +34,8 @@ java8rtjar=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/
 # (Setting it to "false" is not sufficient!)
 #git=C:/Program Files/Git/bin/git.exe
 git=/usr/bin/git
+
+#------------------------------------------------------------------------
+# value of additionalparam for javadoc (must be empty for JDK 1.8 and
+# -html5 for later versions.
+javadocadd=-html5
