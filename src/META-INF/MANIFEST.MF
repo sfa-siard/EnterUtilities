@@ -4,6 +4,6 @@ Specification-Title: Enter Utilities
 Specification-Version: 1
 Specification-Vendor: Enter AG, Rüti ZH, Switzerland
 Implementation-Title: Enter Utilities
-Implementation-Version: 2.1.22
+Implementation-Version: 2.1.23
 Implementation-Vendor: Enter AG, Rüti ZH, Switzerland
 Built-Date: 10. Sep 2018
