@@ -296,6 +296,85 @@ public class Execute
   /*------------------------------------------------------------------*/
   /** executes an external command with arguments.
    @param asCommand external command and arguments to be executed.
+   @param fileWorkingDirectory working directory for external command.
+   @return return code from command.
+  */
+  private int run(String[] asCommand, File fileWorkingDirectory)
+  {
+    _il.enter((Object[])asCommand);
+    int iReturn = -1;
+    try
+    { 
+      Process proc = Runtime.getRuntime().exec(asCommand,null,fileWorkingDirectory);
+      _sStdOut = captureOutput(proc.getInputStream());
+      _il.event("stdout: "+_sStdOut.toString());
+      _sStdErr = captureOutput(proc.getErrorStream());
+      _il.event("stderr: "+_sStdErr.toString());
+      iReturn = proc.waitFor();
+    }
+    catch(InterruptedException ie) { _il.exception(ie); }
+    catch(IOException ie) { _il.exception(ie); }
+    _il.exit(String.valueOf(iReturn));
+    return iReturn;
+  } /* run */
+  
+  /*------------------------------------------------------------------*/
+  /** executes an external command line.
+   @param asCommand external command and arguments to be executed.
+   @param fileWorkingDirectory working directory for external command.
+   @return execution context with result, stdout, and stderr.
+  */
+  public static Execute execute(String[] asCommand, File fileWorkingDirectory)
+  {
+    Execute ex = new Execute();
+    ex._iResult = ex.run(asCommand,fileWorkingDirectory);
+    return ex;
+  } /* execute */
+
+  /*------------------------------------------------------------------*/
+  /** executes an external command with arguments.
+   @param asCommand external command and arguments to be executed.
+   @param fileWorkingDirectory working directory for external command.
+   @param rdrInput redirected input to be used.
+   @return return code from command.
+  */
+  private int run(String[] asCommand, File fileWorkingDirectory,Reader rdrInput)
+  {
+    _il.enter((Object[])asCommand);
+    int iReturn = -1;
+    try
+    { 
+      Process proc = Runtime.getRuntime().exec(asCommand,null,fileWorkingDirectory);
+      redirectInput(rdrInput, proc.getOutputStream());
+      _sStdOut = captureOutput(proc.getInputStream());
+      _il.event("stdout: "+_sStdOut.toString());
+      _sStdErr = captureOutput(proc.getErrorStream());
+      _il.event("stderr: "+_sStdErr.toString());
+      iReturn = proc.waitFor();
+    }
+    catch(InterruptedException ie) { _il.exception(ie); }
+    catch(IOException ie) { _il.exception(ie); }
+    _il.exit(String.valueOf(iReturn));
+    return iReturn;
+  } /* run */
+  
+  /*------------------------------------------------------------------*/
+  /** executes an external command line.
+   @param asCommand external command and arguments to be executed.
+   @param fileWorkingDirectory working directory for external command.
+   @param rdrInput redirected input to be used.
+   @return execution context with result, stdout, and stderr.
+  */
+  public static Execute execute(String[] asCommand, File fileWorkingDirectory, Reader rdrInput)
+  {
+    Execute ex = new Execute();
+    ex._iResult = ex.run(asCommand,fileWorkingDirectory,rdrInput);
+    return ex;
+  } /* execute */
+
+  /*------------------------------------------------------------------*/
+  /** executes an external command with arguments.
+   @param asCommand external command and arguments to be executed.
    @param rdrInput redirected input to be used.
    @return return code from command.
   */
