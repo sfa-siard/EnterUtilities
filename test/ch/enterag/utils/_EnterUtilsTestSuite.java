@@ -11,7 +11,8 @@ import ch.enterag.utils.logging.*;
   {
     ManifestAttributesTester.class,
     SpecialFolderTester.class,
-    IndentLoggerTester.class
+    IndentLoggerTester.class,
+    DuTester.class
   })
 public class _EnterUtilsTestSuite
 {
