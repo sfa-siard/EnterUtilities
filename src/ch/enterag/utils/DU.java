@@ -23,6 +23,7 @@ public class DU
   private static final String _sZ = "Z";
   private static final SimpleDateFormat _sdfXS_DATE = new SimpleDateFormat("yyyy-MM-dd");
   private static final SimpleDateFormat _sdfXS_TIME = new SimpleDateFormat("HH:mm:ss");
+  private static final SimpleDateFormat _sdfXS_DATE_TIME = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final DecimalFormat _dfMILLIS = new DecimalFormat("000");
   private static final DecimalFormat _dfNANOS = new DecimalFormat("000000000");
   public static java.sql.Date dateMINIMUM_SQL = null;
@@ -32,11 +33,11 @@ public class DU
   
   static
   {
-    SimpleDateFormat sdfInternal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
-    _sdfXS_DATE.setTimeZone(TZ.getUtcTimeZone());
     _sdfXS_TIME.setTimeZone(TZ.getUtcTimeZone());
+    _sdfXS_DATE_TIME.setTimeZone(TZ.getUtcTimeZone());
     try
     {
+      SimpleDateFormat sdfInternal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
       Date dateMinimum = sdfInternal.parse("0001-01-01 00:00:00.000 UTC");
       Date dateMaximum = sdfInternal.parse("9999-12-31 00:00:00.000 UTC");
       dateMINIMUM_SQL = new java.sql.Date(dateMinimum.getTime());
@@ -351,7 +352,7 @@ public class DU
    */
   public String toXsDate(java.sql.Date date)
   {
-    String s = _sdfXS_DATE.format(date)+_sZ;
+    String s = _sdfXS_DATE.format(date);
     return s;
   } /* toXsDate */
   
@@ -366,8 +367,6 @@ public class DU
     throws ParseException
   {
     java.sql.Date d = null;
-    if (s.endsWith(_sZ))
-    s = s.substring(0,s.length()-1);
     Date date = _sdfXS_DATE.parse(s);
     d = new java.sql.Date(date.getTime());
     if (d.after(dateMAXIMUM_SQL))
@@ -445,11 +444,7 @@ public class DU
   public String toXsDateTime(java.sql.Timestamp ts)
   {
     StringBuilder sbDateTime = new StringBuilder();
-    String sDate = _sdfXS_DATE.format(ts);
-    sbDateTime.append(sDate);
-    sbDateTime.append("T");
-    String sTime = _sdfXS_TIME.format(ts);
-    sbDateTime.append(sTime);
+    sbDateTime.append(_sdfXS_DATE_TIME.format(ts));
     if (ts.getNanos() > 0)
     {
       sbDateTime.append(".");
@@ -489,10 +484,8 @@ public class DU
       sDecimals = String.format("%1$-9s", sDecimals).replace(" ", "0");;
       iNanos = Integer.parseInt(sDecimals);
     }
-    int i = s.indexOf('T');
-    Date date = _sdfXS_DATE.parse(s.substring(0,i));
-    Date time = _sdfXS_TIME.parse(s.substring(i+1));
-    ts = new java.sql.Timestamp(date.getTime()+time.getTime());
+    Date date = _sdfXS_DATE_TIME.parse(s);
+    ts = new java.sql.Timestamp(date.getTime());
     ts.setNanos(iNanos);
     if (ts.after(tsMAXIMUM_SQL))
     {
