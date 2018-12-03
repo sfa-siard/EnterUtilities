@@ -1,9 +1,6 @@
 Release Notes for EnterUtilities 2.1
 ====================================
 
-2.1.38
-Conversion java.sql.Date to and from XML fixed.
-
 2.1.0
 Release for JAVA 10
 GPL3 license removed. CDDL 1.0 license added.
