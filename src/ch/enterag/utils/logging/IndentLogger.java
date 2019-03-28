@@ -269,8 +269,8 @@ public class IndentLogger extends Logger
   */
   public static IndentLogger getIndentLogger(String sName)
   {
-    LogManager lm = LogManager.getLogManager();
     IndentLogger il = new IndentLogger(sName, null);
+    LogManager lm = LogManager.getLogManager();
     lm.addLogger(il); // sets parent, inherits handlers, level is null, if parent's level is to be used.
     return il;
   } /* getIndentLogger */
