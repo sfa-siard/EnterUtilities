@@ -81,7 +81,7 @@ public class StopWatch
   @param lLong long to be formatted.
   @return string for long with a thousand's separator.
  */
- public String formatLong(long lLong)
+ public static String formatLong(long lLong)
  {
    return dfLONG.format(lLong);
  } /* formatMs */
