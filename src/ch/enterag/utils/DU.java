@@ -352,6 +352,16 @@ public class DU
    */
   public String toXsDate(java.sql.Date date)
   {
+    if (date.after(dateMAXIMUM_SQL))
+    {
+      System.err.println("Converted illegal date "+_sdf.format(date)+" to "+_sdf.format(dateMAXIMUM_SQL));
+      date = dateMAXIMUM_SQL;
+    }
+    if (date.before(dateMINIMUM_SQL))
+    {
+      System.err.println("Converted illegal date "+_sdf.format(date)+" to "+_sdf.format(dateMINIMUM_SQL));
+      date = dateMINIMUM_SQL;
+    }
     String s = _sdfXS_DATE.format(date);
     return s;
   } /* toXsDate */
@@ -443,6 +453,16 @@ public class DU
    */
   public String toXsDateTime(java.sql.Timestamp ts)
   {
+    if (ts.after(tsMAXIMUM_SQL))
+    {
+      System.err.println("Converted illegal date/time "+_sdf.format(ts)+" to "+_sdf.format(tsMAXIMUM_SQL));
+      ts = tsMAXIMUM_SQL;
+    }
+    if (ts.before(tsMINIMUM_SQL))
+    {
+      System.err.println("Converted illegal date/time "+_sdf.format(ts)+" to "+_sdf.format(tsMINIMUM_SQL));
+      ts = tsMINIMUM_SQL;
+    }
     StringBuilder sbDateTime = new StringBuilder();
     sbDateTime.append(_sdfXS_DATE_TIME.format(ts));
     if (ts.getNanos() > 0)
