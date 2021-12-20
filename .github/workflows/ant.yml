@@ -5,9 +5,9 @@ name: Java CI
 
 on:
   push:
-    branches: [ pitc-transfer ]
+    branches: [ dev/pitc-transfer ]
   pull_request:
-    branches: [ pitc-transfer ]
+    branches: [ dev/pitc-transfer ]
 
 jobs:
   build:
