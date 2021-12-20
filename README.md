@@ -26,6 +26,24 @@ ant build
 
 This task increments the version number in the project [MANIFEST.MF](./src/META-INF/MANIFEST.MF)
 
+### Build with gradle
+
+Migration to gradle is a work in progress. Some tests are picked up twice, some tests fail - probably due to class path issues.
+
+Run tests with gradle:
+
+```shell
+./gradlew check
+```
+
+Build the jar with gradle:
+
+```shell
+./gradlew build
+```
+
+_important: the version number set in `build.gradle` has to be set manually!
+
 ## Documentation
 
 [./doc/manual/user/index.html](./doc/manual/user/index.html) contains the manual for using the binaries.
