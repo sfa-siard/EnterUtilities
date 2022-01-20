@@ -1,4 +1,3 @@
-
 # intellij project files
 .idea/
 *.iml
@@ -7,6 +6,7 @@ out/
 
 # asdf configuration
 .tool-versions
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
