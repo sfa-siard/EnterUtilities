@@ -106,7 +106,7 @@ public class Execute
     _il.exit(Boolean.valueOf(bLess));
     return bLess;
   } /* ltVersion */
-  
+
   /*------------------------------------------------------------------*/
   /** compares the current run-time JAVA version with the given version.
    * N.B.: The leading "1." was dropped with JAVA 9!
@@ -120,7 +120,7 @@ public class Execute
       sJavaVersion = sJavaVersion.substring(2);
     if (sVersion.startsWith("1."))
       sVersion = sVersion.substring(2);
-    return ltVersion(System.getProperty("java.version"), sVersion);
+    return ltVersion(sJavaVersion, sVersion);
   } /* isJavaVersionLessThan */
   
 	/*------------------------------------------------------------------*/
