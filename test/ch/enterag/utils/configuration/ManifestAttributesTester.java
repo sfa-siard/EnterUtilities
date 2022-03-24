@@ -1,23 +1,40 @@
 package ch.enterag.utils.configuration;
 
-//import java.util.*;
+import java.util.*;
 import org.junit.*;
 
 public class ManifestAttributesTester
 {
   private ManifestAttributes _mf;
-  
+
   @Before
   public void SetUp()
   {
     _mf = ManifestAttributes.getInstance();
-    // The instance cannot be retrieved in the current setup.
   }
   @Test
   public void testGetBuiltDate()
   {
-    //Calendar cal = _mf.getBuiltDate();
-    //System.out.println(cal.getTime().toString());
+    String res = _mf.getImplementationVersion();
+    System.out.println(res);
+
+    res = _mf.getImplementationTitle();
+    System.out.println(res);
+
+    res = _mf.getImplementationVendor();
+    System.out.println(res);
+
+    res = _mf.getSpecificationVersion();
+    System.out.println(res);
+
+    res = _mf.getSpecificationTitle();
+    System.out.println(res);
+
+    res = _mf.getSpecificationVendor();
+    System.out.println(res);
+
+    Calendar cal = _mf.getBuiltDate();
+    System.out.println(cal.getTime());
   }
 
 }
