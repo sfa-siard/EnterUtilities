@@ -156,7 +156,7 @@ Created    : 09.05.2016, Hartwig Thomas
   
   <!-- increment revision and update manifest -->
   <property name="filerevisionproperties" value="${dirtmp}/revision.properties"/> 
-  <target name="revision" depends="pull">
+  <target name="revision" depends="check">
     <echo message="${ant.project.name}: revision"/>
     <copy file="${filerevoldproperties}" tofile="${filerevisionproperties}" overwrite="true"/>
     <replaceregexp file="${filerevisionproperties}" 
