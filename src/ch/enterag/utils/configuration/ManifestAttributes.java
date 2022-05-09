@@ -180,8 +180,14 @@ public class ManifestAttributes extends Manifest
       	}
       	else /* otherwise get it from the file system */
       	{
-      	  File fileManifest = new File(fileJar.getAbsolutePath()+File.separator+sMANIFEST_RESOURCE); // <...>/META-INF/MANIFEST.MF
-      	  urlManifest = fileManifest.toURI().toURL();
+          File fileManifest = null;
+          if (fileJar.getAbsolutePath().contains("/out/production/")) {
+            fileManifest = new File(fileJar.getAbsolutePath() + sMANIFEST_RESOURCE); // <...>/META-INF/MANIFEST.MF for ant setup
+          } else {
+            fileManifest = new File(fileJar.getParentFile().getParentFile().getParentFile().getAbsolutePath() + "/tmp/jar/MANIFEST.MF"); // <...>/tmp/jar/MANIFEST.MF for gradle setup
+          }
+          urlManifest = fileManifest.toURI().toURL();
+          System.out.println(urlManifest);
       	}
       }     
       _il.event("Using "+String.valueOf(urlManifest));
