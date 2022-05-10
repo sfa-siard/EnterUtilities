@@ -132,7 +132,7 @@ Created    : 09.05.2016, Hartwig Thomas
   </target>
   
   <!-- build the EnterUtils classes -->
-  <target name="build" depends="init,revision">
+  <target name="build" depends="init">
     <echo message="${ant.project.name}: build"/>
     <!-- without this, the package-info class is not generated! -->
     <touch>
@@ -148,10 +148,24 @@ Created    : 09.05.2016, Hartwig Thomas
       destdir="${dirbuildclasses}">
     </javac>
   </target>
-  
+
+  <!-- create the JAR file for tests without setting a new revision -->
+  <property name="jarfile" value="${ant.project.name}.jar"/>
+  <target name="jar-test" depends="build">
+    <echo message="${ant.project.name}: jar"/>
+    <jar jarfile="${dirdist}/${jarfile}"
+         manifest="${filemanifest}">
+      <fileset dir="${dirbuildclasses}">
+        <include name="**/*.class"/>
+        <include name="**/res/*.*"/>
+      </fileset>
+    </jar>
+  </target>
+
+
   <!-- create the JAR file containing all classes -->
   <property name="jarfile" value="${ant.project.name}.jar"/>
-  <target name="jar" depends="build">
+  <target name="jar" depends="javadoc,revision">
     <echo message="${ant.project.name}: jar"/>
     <jar jarfile="${dirdist}/${jarfile}"
        manifest="${filemanifest}">
@@ -165,7 +179,7 @@ Created    : 09.05.2016, Hartwig Thomas
 	<!-- create and run all tests -->
   <property name="classtestsuite" value="ch.enterag.utils._EnterUtilsTestSuite"/>
   <property name="filetests" value="tests"/>
-	<target name="test" depends="jar">
+	<target name="test" depends="jar-test">
     <echo message="${ant.project.name}: tests"/>
 		<!-- build the tests -->
     <javac debug="true" debuglevel="${debuglevel}"
@@ -289,7 +303,7 @@ Created    : 09.05.2016, Hartwig Thomas
   </target>
 		
   <!-- create the ZIP file with binaries for Windows and LINUX -->
-  <target name="zip" depends="javadoc">
+  <target name="release" depends="jar">
     <echo message="${ant.project.name}: zip"/>
     <zip zipfile="${dirdist}/${ant.project.name}-${version}.${revision}.zip">
       <zipfileset dir="${dirdist}" prefix="${ant.project.name}/${dirlib}">

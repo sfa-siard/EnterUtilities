@@ -14,13 +14,11 @@ Run all tests
 ant test
 ```
 
-Build the project
+Create a release
 
 ```shell
-ant build
+ant release
 ```
-
-This task increments the version number in the project [MANIFEST.MF](./src/META-INF/MANIFEST.MF)
 
 ### Build with gradle
 
