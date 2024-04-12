@@ -26,7 +26,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.powermock:powermock-mockito-release-full:1.5.4'
+    implementation 'org.powermock:powermock-mockito-release-full:1.6.2'
+    testImplementation("junit:junit:4.12")
 }
 
 tasks.named('jar') {
