@@ -11,21 +11,9 @@ plugins {
     id 'java-library'
 }
 
+group = 'ch.admin.bar'
 version = '2.1.87'
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-    }
-
-    test {
-        java {
-            srcDirs = ['test']
-        }
-    }
-}
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
@@ -35,17 +23,10 @@ java {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
-
 }
 
 dependencies {
     implementation 'org.powermock:powermock-mockito-release-full:1.5.4'
-}
-
-task copyDependencies(type: Copy) {
-    project.configurations.implementation.setCanBeResolved(true)
-    from configurations.implementation
-    into 'lib-dep'
 }
 
 tasks.named('jar') {
