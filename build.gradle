@@ -14,20 +14,13 @@ plugins {
 group = 'ch.admin.bar'
 version = '2.1.87'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
-    }
-}
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.powermock:powermock-mockito-release-full:1.6.2'
-    testImplementation("junit:junit:4.12")
+    testImplementation 'junit:junit:4.13.2'
 }
 
 tasks.named('jar') {
