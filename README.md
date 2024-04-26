@@ -11,32 +11,21 @@ have been installed. Adjust build.properties if necessary.
 Run all tests
 
 ```shell
-ant test
-```
-
-Create a release
-
-```shell
-ant release
-```
-
-### Build with gradle
-
-Migration to gradle is a work in progress. Some tests are picked up twice, some tests fail - probably due to class path issues.
-
-Run tests with gradle:
-
-```shell
 ./gradlew check
 ```
 
-Build the jar with gradle:
+
+Build the project
 
 ```shell
-./gradlew build
+./gradlew clean build
+```
+Create a release (this creates a new tag and pushes the tag to main branch)
+
+```shell
+./gradlew release
 ```
 
-_important: the version number set in `build.gradle` has to be set manually!_
 
 ## Documentation
 
