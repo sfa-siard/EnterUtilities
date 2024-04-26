@@ -4,6 +4,8 @@ env:
   PROJECT_NAME: enterutilities
 
 on:
+  pull_request:
+    branches: [ main ]
   push:
     tags:
       - v*.**
