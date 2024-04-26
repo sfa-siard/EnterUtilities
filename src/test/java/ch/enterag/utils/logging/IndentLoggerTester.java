@@ -3,7 +3,8 @@
  */
 package ch.enterag.utils.logging;
 
-import org.junit.*;
+
+import org.junit.jupiter.api.Test;
 
 public class IndentLoggerTester
 {

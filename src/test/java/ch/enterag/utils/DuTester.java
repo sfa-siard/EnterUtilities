@@ -1,9 +1,11 @@
 package ch.enterag.utils;
 
-import java.text.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import java.text.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class DuTester
 {
@@ -21,7 +23,7 @@ public class DuTester
       System.out.println("XML: "+sXmlDate);
       java.sql.Date d2 = _du.fromXsDate(sXmlDate);
       System.out.println("After "+String.valueOf(d1)+" ("+String.valueOf(d1.getTime())+")");
-      assertEquals("Invalid conversion!",d1,d2);
+      assertEquals(d1,d2);
     }
     catch(ParseException pe) { fail(EU.getExceptionMessage(pe)); }
   }
@@ -39,7 +41,7 @@ public class DuTester
       System.out.println("XML: "+sXmlTime);
       java.sql.Time t2 = _du.fromXsTime(sXmlTime);
       System.out.println("After "+String.valueOf(t2)+" ("+String.valueOf(t2.getTime())+")");
-      assertEquals("Invalid conversion!",t1,t2);
+      assertEquals(t1,t2);
     }
     catch(ParseException pe) { fail(EU.getExceptionMessage(pe)); }
   }
@@ -56,7 +58,7 @@ public class DuTester
       System.out.println("XML: "+sXmlDateTime);
       java.sql.Timestamp ts2 = _du.fromXsDateTime(sXmlDateTime);
       System.out.println("After "+String.valueOf(ts2)+" ("+String.valueOf(ts2.getTime())+","+String.valueOf(ts2.getNanos())+")");
-      assertEquals("Invalid conversion!",ts1,ts2);
+      assertEquals(ts1,ts2);
     }
     catch(ParseException pe) { fail(EU.getExceptionMessage(pe)); }
   }

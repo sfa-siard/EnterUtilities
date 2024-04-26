@@ -1,20 +1,19 @@
 package ch.enterag.utils.configuration;
 
+
+import org.junit.jupiter.api.Test;
+
 import java.util.*;
-import org.junit.*;
+
 
 public class ManifestAttributesTester
 {
   private ManifestAttributes _mf;
 
-  @Before
-  public void SetUp()
-  {
-    _mf = ManifestAttributes.getInstance();
-  }
   @Test
   public void testGetBuiltDate()
   {
+    _mf = ManifestAttributes.getInstance();
     String res = _mf.getImplementationVersion();
     System.out.println(res);
 
