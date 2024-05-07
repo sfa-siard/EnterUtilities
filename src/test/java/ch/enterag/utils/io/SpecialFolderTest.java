@@ -8,7 +8,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
-public class SpecialFolderTester {
+public class SpecialFolderTest {
 
   @Test
   public void testFindInPath() 
