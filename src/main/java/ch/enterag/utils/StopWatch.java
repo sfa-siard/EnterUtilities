@@ -20,19 +20,19 @@ import java.text.DecimalFormatSymbols;
  * @author Hartwig Thomas
  */
 public class StopWatch {
-    private static final DecimalFormat dfLong = new DecimalFormat("#,##0");
-    private static final DecimalFormat dfDouble = new DecimalFormat("#,##0.00");
-    private static DecimalFormatSymbols dfsEurope = new DecimalFormatSymbols();
+    private static final DecimalFormat DF_LONG = new DecimalFormat("#,##0");
+    private static final DecimalFormat DF_DOUBLE = new DecimalFormat("#,##0.00");
+    private static final DecimalFormatSymbols DFS_EUROPE = new DecimalFormatSymbols();
 
     private long msStart = 0;
     @Getter
     private long msAccumulated = 0;
 
     public StopWatch() {
-        dfsEurope.setGroupingSeparator('\'');
-        dfsEurope.setDecimalSeparator('.');
-        dfLong.setDecimalFormatSymbols(dfsEurope);
-        dfDouble.setDecimalFormatSymbols(dfsEurope);
+        DFS_EUROPE.setGroupingSeparator('\'');
+        DFS_EUROPE.setDecimalSeparator('.');
+        DF_LONG.setDecimalFormatSymbols(DFS_EUROPE);
+        DF_DOUBLE.setDecimalFormatSymbols(DFS_EUROPE);
     }
 
     /**
@@ -51,7 +51,7 @@ public class StopWatch {
      * @return String for long with a thousand's separator.
      */
     public static String formatLong(long longValue) {
-        return dfLong.format(longValue);
+        return DF_LONG.format(longValue);
     }
 
     /**
@@ -93,7 +93,7 @@ public class StopWatch {
         double rate = units;
         if (duration > 0) rate = rate / duration;
         else rate = 0.0;
-        return dfDouble.format(rate);
+        return DF_DOUBLE.format(rate);
     }
 
     /**

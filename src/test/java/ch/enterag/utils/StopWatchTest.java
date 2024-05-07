@@ -3,8 +3,7 @@ package ch.enterag.utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StopWatchTest {
 
@@ -43,7 +42,17 @@ class StopWatchTest {
     }
 
     @Test
-    void shouldFormatRate() {
-        assertEquals("2.00", sw.formatRate(1000, 500), "Formatted rate is incorrect");
+    void shouldFormatRate() throws InterruptedException {
+        assertAll(
+                () -> assertEquals("2.00", sw.formatRate(1000, 500), "Formatted rate is incorrect"),
+                () -> assertEquals("0.00", sw.formatRate(1000, -1), "Formatted rate for negative duration is incorrect")
+        );
+        // given
+        sw.start();
+        //when
+        Thread.sleep(10);
+        sw.stop();
+        //then
+        assertTrue(sw.formatRate(1000).contains("."));
     }
 }
