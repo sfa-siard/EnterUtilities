@@ -11,7 +11,7 @@ class ArgumentsTest {
 
     @BeforeEach
     void setUp() {
-        arguments = new Arguments(new String[]{"arg1", "-opt1=value1", "arg2", "-opt2"});
+        arguments = new Arguments(new String[]{"arg1", "-opt1=value1", "arg2", "-opt2", "-", "-opt3-opt4"});
     }
 
     @Test
@@ -19,7 +19,7 @@ class ArgumentsTest {
         assertAll(
                 () -> assertEquals("value1", arguments.getOptions("opt1"), "Value of opt1 should be value1"),
                 () -> assertEquals("", arguments.getOptions("opt2"), "Value of opt2 should be set explicitly empty"),
-                () -> assertNull(arguments.getOptions("opt3"), "Non-existent option should return null")
+                () -> assertNull(arguments.getOptions("opt5"), "Non-existent option should return null")
         );
     }
 

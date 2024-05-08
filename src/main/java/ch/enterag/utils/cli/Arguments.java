@@ -19,6 +19,7 @@ import lombok.Getter;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class parses the command line and makes the arguments
@@ -33,7 +34,7 @@ public class Arguments {
     /**
      * Container of named options.
      */
-    private final Map<String, String> mapOptions;
+    private final Map<String, String> mapOptions = new HashMap<>();
 
     /**
      * Container of unnamed arguments.
@@ -49,18 +50,12 @@ public class Arguments {
      * @param cliArguments command-line arguments.
      */
     public Arguments(String[] cliArguments) {
-        List<String> argumentList = new ArrayList<>();
-        mapOptions = new HashMap<>();
-        int i = 0;
-        while (i < cliArguments.length) {
-            String arg = cliArguments[i];
-            if (arg.startsWith("-") || (!File.separator.equals("/") && arg.startsWith("/")))
-                parseArguments(arg);
-            else
-                argumentList.add(cliArguments[i]);
-            i++;
-        }
-        arguments = argumentList.toArray(new String[]{});
+        this.arguments = Arrays.stream(cliArguments).filter(arg -> !isOption(arg)).toArray(String[]::new);
+        Arrays.stream(cliArguments).filter(Arguments::isOption).forEach(this::parseArguments);
+    }
+
+    private static boolean isOption(String arg) {
+        return arg.startsWith("-") || (!File.separator.equals("/") && arg.startsWith("/"));
     }
 
     /**
@@ -96,23 +91,33 @@ public class Arguments {
      * @param arg The command-line argument string to be parsed.
      */
     private void parseArguments(String arg) {
+        int optPosition = getOptPosition(arg);
+        if (optPosition > 1) {
+            addArgumentsToOptions(arg, optPosition);
+        } else
+            errorString = "Empty option encountered!";
+    }
+
+    private void addArgumentsToOptions(String arg, int optPosition) {
+        String optionName = arg.substring(1, optPosition);
+        String optionValue = "";
+        if (optPosition < arg.length()) {
+            if ((arg.charAt(optPosition) == ':') ||
+                    (arg.charAt(optPosition) == '='))
+                optionValue = arg.substring(optPosition + 1);
+            else
+                errorString = "Option " + optionName + " must be terminated by colon, equals or blank!";
+        }
+
+        mapOptions.put(optionName, optionValue);
+    }
+
+    private static int getOptPosition(String arg) {
         int optPosition = 1;
         while (optPosition < arg.length() && Character.isLetterOrDigit(arg.charAt(optPosition))) {
             optPosition++;
         }
-        if (optPosition > 1) {
-            String optionName = arg.substring(1, optPosition);
-            String optionValue = "";
-            if (optPosition < arg.length()) {
-                if ((arg.charAt(optPosition) == ':') ||
-                        (arg.charAt(optPosition) == '='))
-                    optionValue = arg.substring(optPosition + 1);
-                else
-                    errorString = "Option " + optionName + " must be terminated by colon, equals or blank!";
-            }
-            mapOptions.put(optionName, optionValue);
-        } else
-            errorString = "Empty option encountered!";
+        return optPosition;
     }
 
     /**
