@@ -7,7 +7,7 @@ import java.text.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class DuTester
+public class DuTest
 {
   private static final DU _du = DU.getInstance("en", "dd.MM.yyyy HH:mm:ss");
 

@@ -6,9 +6,9 @@ package ch.enterag.utils.logging;
 
 import org.junit.jupiter.api.Test;
 
-public class IndentLoggerTester
+public class IndentLoggerTest
 {
-  IndentLogger _il = IndentLogger.getIndentLogger(IndentLoggerTester.class.getPackage().getName());
+  IndentLogger _il = IndentLogger.getIndentLogger(IndentLoggerTest.class.getPackage().getName());
 	@Test
 	public void test()
 	{
@@ -16,4 +16,4 @@ public class IndentLoggerTester
 		_il.exit();
 	}
 
-} /* IndentLoggerTester */
+} /* IndentLoggerTest */

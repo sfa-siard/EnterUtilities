@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 
-public class ManifestAttributesTester
+public class ManifestAttributesTest
 {
   private ManifestAttributes _mf;
 

@@ -9,116 +9,101 @@ Created    : 30.08.2010, Hartwig Thomas
 ======================================================================*/
 package ch.enterag.utils;
 
+import lombok.Getter;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-/*====================================================================*/
-/** StopWatch implements time measuring for performance assessment.
- @author Hartwig Thomas
+/**
+ * StopWatch implements time measuring for performance assessment.
+ *
+ * @author Hartwig Thomas
  */
-public class StopWatch
-{
-  private static DecimalFormatSymbols dfsEUROPE = new DecimalFormatSymbols();
-  private static final DecimalFormat dfLONG = new DecimalFormat("#,##0");
-  private static final DecimalFormat dfDOUBLE = new DecimalFormat("#,##0.00");
-  
-  /*=====================================================================
-  Members
-  =====================================================================*/
-  private long m_lMsStart = 0;
-  private long m_lMsAccumulated = 0;
-  public long getMsAccumulated() { return m_lMsAccumulated; }
-  
-  /*=====================================================================
-  constructor and factory
-  =====================================================================*/
-  /*-------------------------------------------------------------------*/
-  /** private constructor prevents creation except through factory.
-  */
-  private StopWatch()
-  {
-    /* display numbers with . as decimal and ' as thousand's separator */
-    dfsEUROPE.setGroupingSeparator('\'');
-    dfsEUROPE.setDecimalSeparator('.');
-    dfLONG.setDecimalFormatSymbols(dfsEUROPE);
-    dfDOUBLE.setDecimalFormatSymbols(dfsEUROPE);
-  } /* StopWatch */
-  
-  /*-------------------------------------------------------------------*/
-  /** private constructor prevents creation except through factory.
-  @return StopWatch instance.
-  */
-  public static StopWatch getInstance()
-  {
-    return new StopWatch();
-  } /* getInstance */
-   
-  /*=====================================================================
-  methods
-  =====================================================================*/
-  /*-------------------------------------------------------------------*/
-  /** start notes the starting time in milliseconds.
-  */
- public void start()
- {
-   m_lMsStart = System.currentTimeMillis();
- } /* constructor */
- 
- /*-------------------------------------------------------------------*/
- /** stop returns the time since start after having added it to the
-  *       accumulated time.
-  @return time since start in milliseconds.
- */
- public long stop()
- {
-   long lMsInterval = System.currentTimeMillis() - m_lMsStart;
-   m_lMsAccumulated += lMsInterval;
-   return lMsInterval;
- } /* stop */
- 
- /*-------------------------------------------------------------------*/
- /** formatLong helper function to format a long.
-  @param lLong long to be formatted.
-  @return string for long with a thousand's separator.
- */
- public static String formatLong(long lLong)
- {
-   return dfLONG.format(lLong);
- } /* formatMs */
- 
- /*-------------------------------------------------------------------*/
- /** formatMs helper function to format accumulated milliseconds.
-  @return string for long with a thousand's separator.
- */
- public String formatMs()
- {
-   return formatLong(m_lMsAccumulated);
- } /* formatMs */
- 
- /*-------------------------------------------------------------------*/
- /** formatRate helper function to compute a rate (units/ms) and format it
-  @param lUnits units for which a rate (presumably per millisecond) is to be computed.
-  @param lMs duration (presumably per millisecond) for units.
-  @return string for rate with two decimals and a thousand's separator.
- */
- public String formatRate(long lUnits, long lMs)
- {
-   double dRate = lUnits;
-   if (lMs > 0)
-     dRate = dRate/lMs;
-   else
-     dRate = 0.0;
-   return dfDOUBLE.format(dRate);
- } /* formatRate */
+public class StopWatch {
+    private static final DecimalFormat DF_LONG = new DecimalFormat("#,##0");
+    private static final DecimalFormat DF_DOUBLE = new DecimalFormat("#,##0.00");
+    private static final DecimalFormatSymbols DFS_EUROPE = new DecimalFormatSymbols();
 
- /*-------------------------------------------------------------------*/
- /** formatRate helper function to compute a rate (units/ms) and format it
-  @param lUnits units for which a rate (presumably per millisecond) is to be computed.
-  @return string for rate with two decimals and a thousand's separator.
- */
- public String formatRate(long lUnits)
- {
-   return formatRate(lUnits,m_lMsAccumulated);
- } /* formatRate */
+    private long msStart = 0;
+    @Getter
+    private long msAccumulated = 0;
 
-} /* class StopWatch */
+    public StopWatch() {
+        DFS_EUROPE.setGroupingSeparator('\'');
+        DFS_EUROPE.setDecimalSeparator('.');
+        DF_LONG.setDecimalFormatSymbols(DFS_EUROPE);
+        DF_DOUBLE.setDecimalFormatSymbols(DFS_EUROPE);
+    }
+
+    /**
+     * @return StopWatch instance.
+     * @deprecated Use {@link #StopWatch()} to create instances.
+     */
+    @Deprecated
+    public static StopWatch getInstance() {
+        return new StopWatch();
+    }
+
+    /**
+     * Helper function to format a long.
+     *
+     * @param longValue long to be formatted.
+     * @return String for long with a thousand's separator.
+     */
+    public static String formatLong(long longValue) {
+        return DF_LONG.format(longValue);
+    }
+
+    /**
+     * Notes the starting time in milliseconds.
+     */
+    public void start() {
+        msStart = System.currentTimeMillis();
+    }
+
+    /**
+     * Returns the time since start after having added it to the
+     * accumulated time.
+     *
+     * @return Time since start in milliseconds.
+     */
+    public long stop() {
+        long interval = System.currentTimeMillis() - msStart;
+        msAccumulated += interval;
+        return interval;
+    }
+
+    /**
+     * Helper function to format accumulated milliseconds.
+     *
+     * @return String for long with a thousand's separator.
+     */
+    public String formatMs() {
+        return formatLong(msAccumulated);
+    }
+
+    /**
+     * Helper function to compute and format a rate (units/ms).
+     *
+     * @param units Units for which a rate (presumably per millisecond) is to be computed.
+     * @param duration Duration (presumably per millisecond) for units.
+     * @return String for rate with two decimals and a thousand's separator.
+     */
+    public String formatRate(long units, long duration) {
+        double rate = units;
+        if (duration > 0) rate = rate / duration;
+        else rate = 0.0;
+        return DF_DOUBLE.format(rate);
+    }
+
+    /**
+     * Helper function to compute and format a rate (units/ms).
+     *
+     * @param units Units for which a rate (presumably per millisecond) is to be computed.
+     * @return String for rate with two decimals and a thousand's separator.
+     */
+    public String formatRate(long units) {
+        return formatRate(units, msAccumulated);
+    }
+
+}
