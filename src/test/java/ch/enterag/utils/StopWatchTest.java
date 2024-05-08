@@ -55,4 +55,15 @@ class StopWatchTest {
         //then
         assertTrue(sw.formatRate(1000).contains("."));
     }
+
+    @Test
+    void shouldFormatRateWithStopWatch() throws InterruptedException {
+        // given
+        sw.start();
+        //when
+        Thread.sleep(10);
+        sw.stop();
+        //then
+        assertTrue(sw.formatRate(1000).contains("."));
+    }
 }
