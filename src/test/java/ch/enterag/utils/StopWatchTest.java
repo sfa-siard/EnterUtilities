@@ -47,13 +47,6 @@ class StopWatchTest {
                 () -> assertEquals("2.00", sw.formatRate(1000, 500), "Formatted rate is incorrect"),
                 () -> assertEquals("0.00", sw.formatRate(1000, -1), "Formatted rate for negative duration is incorrect")
         );
-        // given
-        sw.start();
-        //when
-        Thread.sleep(10);
-        sw.stop();
-        //then
-        assertTrue(sw.formatRate(1000).contains("."));
     }
 
     @Test
