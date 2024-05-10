@@ -15,11 +15,8 @@ Created    : May 13, 2009, Hartwig Thomas
 ======================================================================*/
 package ch.enterag.utils.cli;
 
-import lombok.Getter;
-
-import java.io.*;
+import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * This class parses the command line and makes the arguments
@@ -34,15 +31,17 @@ public class Arguments {
     /**
      * Container of named options.
      */
-    private final Map<String, String> mapOptions = new HashMap<>();
+    private final Map<String, String> options = new HashMap<>();
 
     /**
      * Container of unnamed arguments.
      */
-    private String[] arguments = null;
+    private final String[] arguments;
 
-    @Getter
-    private String errorString = null;
+    /**
+     * Container of errors.
+     */
+    private final List<String> errors = new ArrayList<>();
 
     /**
      * Constructor parses the command-line arguments
@@ -54,6 +53,12 @@ public class Arguments {
         Arrays.stream(cliArguments).filter(Arguments::isOption).forEach(this::parseArguments);
     }
 
+    /**
+     * Determines if the command-line argument string is an option.
+     *
+     * @param arg The command-line argument.
+     * @return True if the argument is an option.
+     */
     private static boolean isOption(String arg) {
         return arg.startsWith("-") || (!File.separator.equals("/") && arg.startsWith("/"));
     }
@@ -65,7 +70,7 @@ public class Arguments {
      * @return Option value (null for missing option, "" for missing value).
      */
     public String getOptions(String name) {
-        return mapOptions.get(name);
+        return options.get(name);
     }
 
     /**
@@ -86,6 +91,13 @@ public class Arguments {
     }
 
     /**
+     * @return String of all parsing errors.
+     */
+    public String getErrors() {
+        return String.join(", ", this.errors);
+    }
+
+    /**
      * Parses an argument to extract an option and its value.
      *
      * @param arg The command-line argument string to be parsed.
@@ -95,9 +107,15 @@ public class Arguments {
         if (optPosition > 1) {
             addArgumentsToOptions(arg, optPosition);
         } else
-            errorString = "Empty option encountered!";
+            errors.add("Empty option encountered!");
     }
 
+    /**
+     * Adds parsed option name and value to options map.
+     *
+     * @param arg The command-line argument string containing the option.
+     * @param optPosition The position in the string where the option name ends.
+     */
     private void addArgumentsToOptions(String arg, int optPosition) {
         String optionName = arg.substring(1, optPosition);
         String optionValue = "";
@@ -106,12 +124,18 @@ public class Arguments {
                     (arg.charAt(optPosition) == '='))
                 optionValue = arg.substring(optPosition + 1);
             else
-                errorString = "Option " + optionName + " must be terminated by colon, equals or blank!";
+                errors.add("Option " + optionName + " must be terminated by colon, equals or blank!");
         }
 
-        mapOptions.put(optionName, optionValue);
+        options.put(optionName, optionValue);
     }
 
+    /**
+     * Identifies the position in the command-line argument string where the option name ends.
+     *
+     * @param arg The command-line argument to analyse.
+     * @return Index of the position where the option name ends.
+     */
     private static int getOptPosition(String arg) {
         int optPosition = 1;
         while (optPosition < arg.length() && Character.isLetterOrDigit(arg.charAt(optPosition))) {

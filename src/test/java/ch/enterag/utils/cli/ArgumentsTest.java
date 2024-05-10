@@ -11,7 +11,7 @@ class ArgumentsTest {
 
     @BeforeEach
     void setUp() {
-        arguments = new Arguments(new String[]{"arg1", "-opt1=value1", "arg2", "-opt2", "-", "-opt3-opt4"});
+        arguments = new Arguments(new String[]{"arg1", "-opt1=value1", "arg2", "-opt2", "-", "-opt3-opt4", "arg3"});
     }
 
     @Test
@@ -25,12 +25,19 @@ class ArgumentsTest {
 
     @Test
     void shouldGetArgumentPosition() {
-        assertEquals("arg1", arguments.getArgumentPosition(0), "First argument should be arg1");
+        assertAll(
+                () -> assertEquals("arg1", arguments.getArgumentPosition(0), "First argument should be arg1"),
+                () -> assertEquals("arg2", arguments.getArgumentPosition(1), "Second argument should be arg2")
+        );
     }
 
     @Test
     void shouldGetArgumentsNumber() {
-        assertEquals(2, arguments.getArgumentsNumber(), "There should be two arguments");
+        assertEquals(3, arguments.getArgumentsNumber(), "There should be three arguments");
     }
 
+    @Test
+    void shouldGetErrors() {
+        assertEquals("Empty option encountered!, Option opt3 must be terminated by colon, equals or blank!", arguments.getErrors());
+    }
 }
