@@ -15,90 +15,143 @@ Created    : May 13, 2009, Hartwig Thomas
 ======================================================================*/
 package ch.enterag.utils.cli;
 
-import java.io.*;
+import java.io.File;
 import java.util.*;
 
-/*===================================================================*/
-/** This class parses the command line and makes the arguments
+/**
+ * This class parses the command line and makes the arguments
  * accessible as named options by name and unnamed arguments by
  * position.
- * In the name of simplicity this class does support switches that 
+ * In the name of simplicity this class does support switches that
  * indicate a boolean value just by their presence.
+ *
  * @author Hartwig Thomas
  */
-public class Arguments
-{
-  /** container of named options */
-  private Map<String,String> m_mapOptions = null;
-  /** get value of parsed option. 
-   * @param sName name of option 
-   * @return option value (null for missing option, "" for missing value) */
-  public String getOption(String sName) { return m_mapOptions.get(sName); }
-  /** container of unnamed arguments */
-  private String[] m_asArgument = null;
-  /** get value of unnamed argument. 
-   * @param iPosition position of argument (0 based) 
-   * @return argument value */
-  public String getArgument(int iPosition) { return m_asArgument[iPosition]; }
-  /** @return number of unnamed arguments. */
-  public int getArguments() { return m_asArgument.length; }
-  /** error string */
-  private String m_sError = null;
-  /** @return syntax error on command line. */
-  public String getError() { return m_sError; }
-  
-  /*------------------------------------------------------------------*/
-  /** constructor parses the command-line arguments
-   * @param args command-line arguments.
-   */
-  private Arguments(String[] args)
-  {
-    List<String> listArgument = new ArrayList<String>();
-    m_mapOptions = new HashMap<String,String>();
-    int iArgument = 0;
-    while (iArgument < args.length)
-    {
-      String sArgument = args[iArgument]; 
-      if (sArgument.startsWith("-") || (!File.separator.equals("/") && sArgument.startsWith("/")))
-      {
-        /* named argument: name is terminated by special character */
-        int iPosition = 1;
-        for (;
-          ((iPosition < sArgument.length() &&
-           Character.isLetterOrDigit(sArgument.charAt(iPosition))));
-          iPosition++) {}
-        if (iPosition > 1)
-        {
-          String sName = sArgument.substring(1,iPosition);
-          String sValue = "";
-          if (iPosition < sArgument.length())
-          {
-            if ((sArgument.charAt(iPosition) == ':') || 
-                (sArgument.charAt(iPosition) == '='))
-              sValue = sArgument.substring(iPosition+1); /* skip one ":", "=" */
-            else
-              m_sError = "Option " + sName + " must be terminated by colon, equals or blank!";
-          }
-          m_mapOptions.put(sName, sValue);
-        }
-        else
-          m_sError = "Empty option encountered!";
-      }
-      else
-        listArgument.add(args[iArgument]);
-      iArgument++;
-    }
-    m_asArgument = listArgument.toArray(new String[]{});
-  } /* constructor Arguments */
-  
-  /*------------------------------------------------------------------*/
-  /** factory parses the command-line arguments and returns the result.
-   * @param args command-line arguments.
-   * @return instance of Arguments.
-   */
-  public static Arguments newInstance(String[] args)
-  {
-    return new Arguments(args);
-  } /* newInstance */
+public class Arguments {
+    /**
+     * Container of named options.
+     */
+    private final Map<String, String> options = new HashMap<>();
 
-} /* class Arguments */
+    /**
+     * Container of unnamed arguments.
+     */
+    private final String[] arguments;
+
+    /**
+     * Container of errors.
+     */
+    private final List<String> errors = new ArrayList<>();
+
+    /**
+     * Constructor parses the command-line arguments
+     *
+     * @param cliArguments command-line arguments.
+     */
+    public Arguments(String[] cliArguments) {
+        this.arguments = Arrays.stream(cliArguments).filter(arg -> !isOption(arg)).toArray(String[]::new);
+        Arrays.stream(cliArguments).filter(Arguments::isOption).forEach(this::parseArguments);
+    }
+
+    /**
+     * Determines if the command-line argument string is an option.
+     *
+     * @param arg The command-line argument.
+     * @return True if the argument is an option.
+     */
+    private static boolean isOption(String arg) {
+        return arg.startsWith("-") || (!File.separator.equals("/") && arg.startsWith("/"));
+    }
+
+    /**
+     * Get value of parsed option.
+     *
+     * @param name Name of option.
+     * @return Option value (null for missing option, "" for missing value).
+     */
+    public String getOptions(String name) {
+        return options.get(name);
+    }
+
+    /**
+     * Get value of unnamed argument.
+     *
+     * @param argPosition Position of argument (0 based).
+     * @return Argument value.
+     */
+    public String getArgumentPosition(int argPosition) {
+        return arguments[argPosition];
+    }
+
+    /**
+     * @return Number of unnamed arguments.
+     */
+    public int getArgumentsNumber() {
+        return arguments.length;
+    }
+
+    /**
+     * @return String of all parsing errors.
+     */
+    public String getErrors() {
+        return String.join(", ", this.errors);
+    }
+
+    /**
+     * Parses an argument to extract an option and its value.
+     *
+     * @param arg The command-line argument string to be parsed.
+     */
+    private void parseArguments(String arg) {
+        int optPosition = getOptPosition(arg);
+        if (optPosition > 1) {
+            addArgumentsToOptions(arg, optPosition);
+        } else
+            errors.add("Empty option encountered!");
+    }
+
+    /**
+     * Adds parsed option name and value to options map.
+     *
+     * @param arg The command-line argument string containing the option.
+     * @param optPosition The position in the string where the option name ends.
+     */
+    private void addArgumentsToOptions(String arg, int optPosition) {
+        String optionName = arg.substring(1, optPosition);
+        String optionValue = "";
+        if (optPosition < arg.length()) {
+            if ((arg.charAt(optPosition) == ':') ||
+                    (arg.charAt(optPosition) == '='))
+                optionValue = arg.substring(optPosition + 1);
+            else
+                errors.add("Option " + optionName + " must be terminated by colon, equals or blank!");
+        }
+
+        options.put(optionName, optionValue);
+    }
+
+    /**
+     * Identifies the position in the command-line argument string where the option name ends.
+     *
+     * @param arg The command-line argument to analyse.
+     * @return Index of the position where the option name ends.
+     */
+    private static int getOptPosition(String arg) {
+        int optPosition = 1;
+        while (optPosition < arg.length() && Character.isLetterOrDigit(arg.charAt(optPosition))) {
+            optPosition++;
+        }
+        return optPosition;
+    }
+
+    /**
+     * @param args Command-line arguments.
+     * @return Arguments Instance.
+     * @deprecated Use {@link #Arguments} to create instances.
+     */
+    @Deprecated
+    public static Arguments getInstance(String[] args) {
+        return new Arguments(args);
+    }
+
+}
