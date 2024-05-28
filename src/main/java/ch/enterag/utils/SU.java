@@ -56,23 +56,9 @@ public abstract class SU
   @Deprecated
   public static String replace(String s, String sFind, String sReplace)
   {
-  	StringBuffer sb = new StringBuffer();
-  	if (SU.isNotEmpty(s))
-  	{
-    	int iStart = 0;
-    	for (int iMatch = s.indexOf(sFind, iStart); iMatch >= 0; iMatch = s.indexOf(sFind, iStart))
-    	{
-    		/* append next portion of s */
-      	sb.append(s.substring(iStart, iMatch));
-    		/* append sReplace */
-      	sb.append(sReplace);
-    		/* skip sFind */
-    		iStart = iMatch + sFind.length();
-    	}
-    	/* append last portion */
-    	sb.append(s.substring(iStart, s.length()));
-  	}
-  	return sb.toString();
+
+ return s.replace(sFind, sReplace);
+
   } /* replace */
   
   /*------------------------------------------------------------------*/
