@@ -1,12 +1,8 @@
-/*== SqlTypes.java =====================================================
-Maps values of java.sql.Types to their name. 
-Version     : $Id: SqlTypes.java 35 2015-02-05 14:43:18Z hartwigthomas $
-Application : Database Utilities
-Description : Maps values of java.sql.Types to their name.
-------------------------------------------------------------------------
+/*
 Copyright  : 2014, Enter AG, Zurich, Switzerland
+             2024, Puzzle ITC GmbH, Switzerland
 Created    : 12.12.2014, Hartwig Thomas
-======================================================================*/
+*/
 package ch.enterag.utils.database;
 
 import java.lang.reflect.*;
