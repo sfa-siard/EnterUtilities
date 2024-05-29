@@ -13,62 +13,58 @@ import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
 
-/*====================================================================*/
-/** Maps values of java.sql.Types to their name.
- * @author Hartwig
+/**
+ * This class maps values of java.sql.Types to their name.
+ *
+ * @author Hartwig Thomas
  */
-public abstract class SqlTypes
-{
-  public static final String sUNKNOWN = "UNKNOWN";
-  
-  /** translation from (int) Types value to type name */
-  private static Map<Integer,String> _mapTypeNames = null;
-  
-  /*------------------------------------------------------------------*/
-  /** initialize the translation table */
-  private static void initialize()
-  {
-    _mapTypeNames = new HashMap<Integer, String>();
-    Field[] afield = Types.class.getDeclaredFields();
-    for (int iField = 0; iField < afield.length; iField++)
-    {
-      try
-      {
-        Field field = afield[iField];
-        Integer iType = Integer.valueOf(field.getInt(null));
-        String sTypeName = afield[iField].getName();
-        _mapTypeNames.put(iType, sTypeName);
-      }
-      catch(IllegalAccessException iae) {}
+public abstract class SqlTypes {
+    /**
+     * Used for values of SQL Types that do not have a corresponding name.
+     */
+    private static final String UNKNOWN = "UNKNOWN";
+
+    /**
+     * Maps values of SQL Types to their name.
+     */
+    private static final Map<Integer, String> mapTypeNames = new HashMap<>();
+
+    static {
+      initialize();
     }
-  } /* initialize */
-  
-  /*------------------------------------------------------------------*/
-  /** translate a type to its name
-   * @param iType java.sql.Types value.
-   * @return name of the type.
-   */
-  public static String getTypeName(int iType)
-  {
-    if (_mapTypeNames == null)
-      initialize();
-    String sType = _mapTypeNames.get(Integer.valueOf(iType));
-    if (sType == null)
-      sType = sUNKNOWN;
-    return sType;
-  } /* getTypeName */
-  
-  /*------------------------------------------------------------------*/
-  /* return all types.
-   * @return a sorted list of all types.
-   */
-  public static List<Integer> getAllTypes()
-  {
-    if (_mapTypeNames == null)
-      initialize();
-    List<Integer> listTypes = new ArrayList<Integer>(_mapTypeNames.keySet());
-    Collections.sort(listTypes);
-    return listTypes;
-  } /* getAllTypes */
-  
-} /* class SqlTypes */
+
+    /**
+     * Reads the fields of java.sql.Types and populates a map with field values and names.
+     */
+    private static void initialize() {
+        Field[] fields = Types.class.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                mapTypeNames.put(field.getInt(null), field.getName());
+            } catch (IllegalAccessException e) {
+                System.err.println("Failed to access field: " + field.getName());
+            }
+        }
+    }
+
+    /**
+     * Translates the SQL type to its name.
+     *
+     * @param typeValue java.sql.Types value.
+     * @return Name of the type.
+     */
+    public static String getTypeName(int typeValue) {
+      return mapTypeNames.getOrDefault(typeValue, UNKNOWN);
+    }
+
+    /**
+     * Returns a list of all SQL type values.
+     *
+     * @return A sorted list of all types.
+     */
+    public static List<Integer> getAllTypes() {
+        List<Integer> listTypes = new ArrayList<>(mapTypeNames.keySet());
+        Collections.sort(listTypes);
+        return listTypes;
+    }
+}
