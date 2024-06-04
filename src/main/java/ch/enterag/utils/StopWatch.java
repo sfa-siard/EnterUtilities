@@ -1,12 +1,8 @@
-/*== StopWatch.java ====================================================
-StopWatch implements a utility for performance testing.
-Version     : $Id: StopWatch.java 1212 2010-09-02 12:00:26Z hartwig $
-Application : Utilities
-Description : StopWatch implements a utility for performance testing.
-------------------------------------------------------------------------
-Copyright  : Enter AG, Zurich, Switzerland, 2010
+/*
+Copyright  : 2010, Enter AG, Zurich, Switzerland
+             2024, Puzzle ITC GmbH, Switzerland
 Created    : 30.08.2010, Hartwig Thomas
-======================================================================*/
+*/
 package ch.enterag.utils;
 
 import lombok.Getter;

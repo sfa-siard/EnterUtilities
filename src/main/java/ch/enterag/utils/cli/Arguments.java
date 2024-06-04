@@ -1,18 +1,8 @@
-/*== Arguments.java ====================================================
-Trivial command-line parser
-Version     : $Id: Arguments.java 539 2016-02-17 14:11:58Z hartwig $
-Application : CLI Utilities
-Description : The command-line is parsed into options (introduced by "-"
-              or "/" (Windows only) identified by name and unnamed 
-              arguments identified by position.
-              Named options may occur anywhere. If they have a value,
-              it must be separated from the option name by "=" or ":". 
-              Unnamed arguments may not start with a "-" or "/" (on Windows). 
-Platform    : JAVA SE 1.5 or higher  
-------------------------------------------------------------------------
-Copyright  : 2009, Enter AG, Zurich, Switzerland 
+/*
+Copyright  : 2009, Enter AG, Zurich, Switzerland
+             2024, Puzzle ITC GmbH, Switzerland
 Created    : May 13, 2009, Hartwig Thomas
-======================================================================*/
+*/
 package ch.enterag.utils.cli;
 
 import java.io.File;
