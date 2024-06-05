@@ -8,16 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SUTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
-    void isNotEmpty() {
+    void shouldIsNotEmpty() {
         // given
 
         // when
@@ -26,61 +18,7 @@ class SUTest {
     }
 
     @Test
-    void isNotWhite() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void replace() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void format() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void testFormat() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void repeat() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void testRepeat() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void getBreakPoint() {
+    void shouldRepeat() {
         // given
 
         // when
@@ -117,24 +55,6 @@ class SUTest {
 
     @Test
     void putCp437String() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void putIsoLatin1String() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void putWindows1252String() {
         // given
 
         // when
@@ -180,15 +100,6 @@ class SUTest {
 
     @Test
     void getWindows1252String() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void toCsv() {
         // given
 
         // when
