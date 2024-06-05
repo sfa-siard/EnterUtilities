@@ -21,7 +21,7 @@ public abstract class SU {
      * @return true if string is not null and not empty.
      */
     public static boolean isNotEmpty(String inputString) {
-        return (inputString != null) && (!inputString.trim().isEmpty());
+        return (inputString != null) && (!inputString.isEmpty());
     }
 
     /**
@@ -140,7 +140,7 @@ public abstract class SU {
             }
             return sb.toString();
         } catch (IOException e) {
-            System.out.println(e.getClass().getName() + ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return null;
     }
@@ -192,9 +192,9 @@ public abstract class SU {
      * @return Prepared string.
      */
     public static String toHtml(String text) {
-        return text.replace("<", "&lt;")
+        return text.replace("&", "&amp;")
+                .replace("<", "&lt;")
                 .replace(">", "&gt;")
-                .replace("&", "&amp;")
                 .replace("\"", "&quot;");
     }
 }
