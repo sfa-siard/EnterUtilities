@@ -7,7 +7,6 @@ Created    : 15.02.2008, Hartwig Thomas
 package ch.enterag.utils;
 
 import java.io.*;
-import java.text.*;
 
 /**
  * SU implements a number of often used string utilities.
@@ -23,52 +22,6 @@ public abstract class SU {
      */
     public static boolean isNotEmpty(String inputString) {
         return (inputString != null) && (!inputString.trim().isEmpty());
-    }
-
-    /**
-     * Replaces all occurrences of String find by String replace.
-     *
-     * @param inputString String to be transformed.
-     * @param find        Substring to be found.
-     * @param replace     Substring to insert in place.
-     * @return Transformed String.
-     * @deprecated Is available as a String method since JAVA 1.5.
-     */
-    @Deprecated
-    public static String replace(String inputString, String find, String replace) {
-        return inputString.replace(find, replace);
-    }
-
-    /**
-     * Works like MessageFormat.format, but assumes that all single quotes not immediately preceding { or } are meant to represent a single quote.
-     *
-     * @param inputString String to be formatted.
-     * @param arguments   Replacement arguments to be used.
-     * @return Formatted string.
-     */
-    public static String format(String inputString, Object[] arguments) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < inputString.length(); i++) {
-            char c = inputString.charAt(i);
-            stringBuilder.append(c);
-            if (c == '\'' && (i < inputString.length() - 1)) {
-                char d = inputString.charAt(i + 1);
-                if ((d != '{') && (d != '}'))
-                    stringBuilder.append('\'');
-            }
-        }
-        return MessageFormat.format(stringBuilder.toString(), arguments);
-    }
-
-    /**
-     * Replaces {0} in the pattern by the given string.
-     *
-     * @param inputString String to be formatted.
-     * @param replace     Replacement string to be used.
-     * @return Formatted string.
-     */
-    public static String format(String inputString, String replace) {
-        return format(inputString, new Object[]{replace});
     }
 
     /**
@@ -105,32 +58,6 @@ public abstract class SU {
         for (int i = 0; i < length; i++)
             sb.append(s);
         return sb.toString();
-    }
-
-    /**
-     * Returns the next possible line breakpoint in the given range.
-     *
-     * @param s     String to be broken.
-     * @param start Beginning of the line.
-     * @param end   Maximum value of breakpoint.
-     * @return Breakpoint.
-     */
-    public static int getBreakPoint(String s, int start, int end) {
-        end = Math.min(end, s.length());
-        int breakPoint = s.indexOf('\n', start) + 1;
-        if ((breakPoint <= start) || (breakPoint > end)) {
-            breakPoint = end;
-            if ((end < s.length()) && (s.charAt(end) != ' ')) {
-                for (int i = end - 1; i > start; i--) {
-                    char c = s.charAt(i + 1);
-                    if ((c == ' ') || (c == '-') || (c == '\n') || (c == '\r') || (c == '\t')) {
-                        breakPoint = i + 1;
-                        break;
-                    }
-                }
-            }
-        }
-        return breakPoint;
     }
 
     /**
@@ -198,34 +125,13 @@ public abstract class SU {
     }
 
     /**
-     * Converts a string to a ISO-8859-1-encoded byte buffer.
-     *
-     * @param s String to be converted.
-     * @return Encoded byte buffer.
-     */
-    public static byte[] putIsoLatin1String(String s) {
-        return putEncodedCharArray(s.toCharArray(), 0, s.length(), "ISO-8859-1");
-    }
-
-    /**
-     * Converts a string to a Windows-1252-encoded byte buffer.
-     *
-     * @param s String to be converted.
-     * @return Encoded byte buffer.
-     */
-    public static byte[] putWindows1252String(String s) {
-        return putEncodedCharArray(s.toCharArray(), 0, s.length(), "Windows-1252");
-    }
-
-
-    /**
      * Converts an encoded byte buffer to a string.
      *
      * @param buf      Byte buffer.
      * @param encoding Encoding to be used.
      * @return Encoded string.
      */
-    public static String getEncodedString(byte[] buf, String encoding) {
+    private static String getEncodedString(byte[] buf, String encoding) {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(buf);
              InputStreamReader isr = new InputStreamReader(bais, encoding)) {
             StringBuilder sb = new StringBuilder();
@@ -277,23 +183,6 @@ public abstract class SU {
      */
     public static String getWindows1252String(byte[] buf) {
         return getEncodedString(buf, "Windows-1252");
-    }
-
-    /**
-     * Prepares string for a CSV cell. All special characters are replaced by escaping their hex value using the \x prefix.
-     *
-     * @param text String to be prepared.
-     * @return Prepared string.
-     */
-    public static String toCsv(String text) {
-        text = text.replace("\\", "\\\\")
-                .replace("\n", "\\n")
-                .replace("\r", "\\r")
-                .replace("\t", "\\t");
-        for (int i = 0; i < 32; i++) {
-            text = text.replace(String.valueOf((char) i), "\\x" + BU.toHex((byte) i));
-        }
-        return text;
     }
 
     /**
