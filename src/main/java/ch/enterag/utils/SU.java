@@ -6,7 +6,9 @@ Created    : 15.02.2008, Hartwig Thomas
 
 package ch.enterag.utils;
 
-import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * SU implements a number of often used string utilities.
@@ -61,27 +63,6 @@ public abstract class SU {
     }
 
     /**
-     * Converts a portion of a character array to an encoded byte buffer.
-     *
-     * @param chars    Character array to be converted.
-     * @param offset   Offset in character array where encoding is to start.
-     * @param length   Length of character array to be converted.
-     * @param encoding Encoding to be used.
-     * @return Encoded byte buffer.
-     */
-    private static byte[] putEncodedCharArray(char[] chars, int offset, int length, String encoding) {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(length);
-             OutputStreamWriter osw = new OutputStreamWriter(baos, encoding)) {
-            osw.write(chars, offset, length);
-            osw.close();
-            return baos.toByteArray();
-        } catch (IOException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return null;
-    }
-
-    /**
      * Converts a character array to a UTF8-encoded byte buffer.
      *
      * @param chars  Character array to be converted.
@@ -90,7 +71,8 @@ public abstract class SU {
      * @return Encoded byte buffer.
      */
     public static byte[] putUtf8CharArray(char[] chars, int offset, int length) {
-        return putEncodedCharArray(chars, offset, length, SU.sUTF8_CHARSET_NAME);
+        String s = new String(chars, offset, length);
+        return s.getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -101,7 +83,8 @@ public abstract class SU {
      * @return Encoded byte buffer.
      */
     public static byte[] putEncodedString(String s, String encoding) {
-        return putEncodedCharArray(s.toCharArray(), 0, s.length(), encoding);
+        Charset charset = Charset.forName(encoding);
+        return s.getBytes(charset);
     }
 
     /**
@@ -111,7 +94,7 @@ public abstract class SU {
      * @return Encoded byte buffer.
      */
     public static byte[] putUtf8String(String s) {
-        return putEncodedCharArray(s.toCharArray(), 0, s.length(), SU.sUTF8_CHARSET_NAME);
+        return s.getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -121,7 +104,7 @@ public abstract class SU {
      * @return Encoded byte buffer.
      */
     public static byte[] putCp437String(String s) {
-        return putEncodedCharArray(s.toCharArray(), 0, s.length(), "Cp437");
+        return s.getBytes(Charset.forName("Cp437"));
     }
 
     /**
@@ -132,17 +115,13 @@ public abstract class SU {
      * @return Encoded string.
      */
     private static String getEncodedString(byte[] buf, String encoding) {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf);
-             InputStreamReader isr = new InputStreamReader(bais, encoding)) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = isr.read(); i != -1; i = isr.read()) {
-                sb.append((char) i);
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            System.err.println(e.getClass().getName() + ":" + e.getMessage());
+        try {
+            Charset charset = Charset.forName(encoding);
+            return new String(buf, charset);
+        } catch (UnsupportedCharsetException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return "Unsupported encoding";
         }
-        return null;
     }
 
     /**

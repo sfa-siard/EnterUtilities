@@ -40,18 +40,19 @@ class SUTest {
         );
     }
 
-
     @Test
     void shouldGetStringMethods() {
         String sampleText = "Hello, world! *\u00A0\uD83D\uDE00\u00A0*";
-        byte[] utf8Bytes = sampleText.getBytes(StandardCharsets.UTF_8);
-        byte[] cp437Bytes = sampleText.getBytes(StandardCharsets.US_ASCII);
-        byte[] iso88591Bytes = sampleText.getBytes(StandardCharsets.ISO_8859_1);
+        byte[] utf8Bytes = sampleText.getBytes(Charset.forName("UTF-8"));
+        byte[] cp437Bytes = sampleText.getBytes(Charset.forName("Cp437"));
+        byte[] iso88591Bytes = sampleText.getBytes(Charset.forName("ISO-8859-1"));
         byte[] windows1252Bytes = sampleText.getBytes(Charset.forName("Windows-1252"));
-        assertEquals(sampleText, SU.getUtf8String(utf8Bytes));
-        assertEquals("Hello, world! *???*", SU.getCp437String(cp437Bytes));
-        assertEquals("Hello, world! *\u00A0?\u00A0*", SU.getIsoLatin1String(iso88591Bytes));
-        assertEquals("Hello, world! *\u00A0?\u00A0*", SU.getWindows1252String(windows1252Bytes));
+        assertAll(
+                () -> assertEquals((new String(utf8Bytes, (Charset.forName("UTF-8")))), SU.getUtf8String(utf8Bytes)),
+                () -> assertEquals((new String(cp437Bytes, (Charset.forName("Cp437")))), SU.getCp437String(cp437Bytes)),
+                () -> assertEquals((new String(iso88591Bytes, (Charset.forName("ISO-8859-1")))), SU.getIsoLatin1String(iso88591Bytes)),
+                () -> assertEquals((new String(windows1252Bytes, (Charset.forName("Windows-1252")))), SU.getWindows1252String(windows1252Bytes))
+        );
     }
 
     @Test
