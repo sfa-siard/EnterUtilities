@@ -26,14 +26,14 @@ class ArgumentsTest {
     @Test
     void shouldGetArgumentPosition() {
         assertAll(
-                () -> assertEquals("arg1", arguments.getArgumentPosition(0), "First argument should be arg1"),
-                () -> assertEquals("arg2", arguments.getArgumentPosition(1), "Second argument should be arg2")
+                () -> assertEquals("arg1", arguments.getArgument(0), "First argument should be arg1"),
+                () -> assertEquals("arg2", arguments.getArgument(1), "Second argument should be arg2")
         );
     }
 
     @Test
     void shouldGetArgumentsNumber() {
-        assertEquals(3, arguments.getArgumentsNumber(), "There should be three arguments");
+        assertEquals(3, arguments.getArguments(), "There should be three arguments");
     }
 
     @Test

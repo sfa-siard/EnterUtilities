@@ -69,14 +69,14 @@ public class Arguments {
      * @param argPosition Position of argument (0 based).
      * @return Argument value.
      */
-    public String getArgumentPosition(int argPosition) {
+    public String getArgument(int argPosition) {
         return arguments[argPosition];
     }
 
     /**
      * @return Number of unnamed arguments.
      */
-    public int getArgumentsNumber() {
+    public int getArguments() {
         return arguments.length;
     }
 
