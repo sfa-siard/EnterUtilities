@@ -59,7 +59,7 @@ public class Arguments {
      * @param name Name of option.
      * @return Option value (null for missing option, "" for missing value).
      */
-    public String getOptions(String name) {
+    public String getOption(String name) {
         return options.get(name);
     }
 

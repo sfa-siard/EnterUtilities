@@ -17,9 +17,9 @@ class ArgumentsTest {
     @Test
     void shouldGetOptions() {
         assertAll(
-                () -> assertEquals("value1", arguments.getOptions("opt1"), "Value of opt1 should be value1"),
-                () -> assertEquals("", arguments.getOptions("opt2"), "Value of opt2 should be set explicitly empty"),
-                () -> assertNull(arguments.getOptions("opt5"), "Non-existent option should return null")
+                () -> assertEquals("value1", arguments.getOption("opt1"), "Value of opt1 should be value1"),
+                () -> assertEquals("", arguments.getOption("opt2"), "Value of opt2 should be set explicitly empty"),
+                () -> assertNull(arguments.getOption("opt5"), "Non-existent option should return null")
         );
     }
 
