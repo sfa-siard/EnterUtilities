@@ -81,7 +81,9 @@ public abstract class SU {
      * @param s        String to be converted.
      * @param encoding Encoding to be used.
      * @return Encoded byte buffer.
+     * @deprecated Use String.getBytes(Charset charset).
      */
+    @Deprecated
     public static byte[] putEncodedString(String s, String encoding) {
         Charset charset = Charset.forName(encoding);
         return s.getBytes(charset);
@@ -92,7 +94,9 @@ public abstract class SU {
      *
      * @param s String to be converted.
      * @return Encoded byte buffer.
+     * @deprecated Use String.getBytes(Charset charset).
      */
+    @Deprecated
     public static byte[] putUtf8String(String s) {
         return s.getBytes(StandardCharsets.UTF_8);
     }
@@ -102,7 +106,9 @@ public abstract class SU {
      *
      * @param s String to be converted.
      * @return Encoded byte buffer.
+     * @deprecated Use String.getBytes(Charset charset).
      */
+    @Deprecated
     public static byte[] putCp437String(String s) {
         return s.getBytes(Charset.forName("Cp437"));
     }
