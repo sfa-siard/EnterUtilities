@@ -15,7 +15,7 @@ class ArgumentsTest {
     }
 
     @Test
-    void shouldGetOptions() {
+    void shouldGetOption() {
         assertAll(
                 () -> assertEquals("value1", arguments.getOption("opt1"), "Value of opt1 should be value1"),
                 () -> assertEquals("", arguments.getOption("opt2"), "Value of opt2 should be set explicitly empty"),
@@ -24,7 +24,7 @@ class ArgumentsTest {
     }
 
     @Test
-    void shouldGetArgumentPosition() {
+    void shouldGetArgument() {
         assertAll(
                 () -> assertEquals("arg1", arguments.getArgument(0), "First argument should be arg1"),
                 () -> assertEquals("arg2", arguments.getArgument(1), "Second argument should be arg2")
@@ -32,7 +32,7 @@ class ArgumentsTest {
     }
 
     @Test
-    void shouldGetArgumentsNumber() {
+    void shouldGetArguments() {
         assertEquals(3, arguments.getArguments(), "There should be three arguments");
     }
 
