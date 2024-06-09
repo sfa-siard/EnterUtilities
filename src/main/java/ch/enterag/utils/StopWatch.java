@@ -5,8 +5,6 @@ Created    : 30.08.2010, Hartwig Thomas
 */
 package ch.enterag.utils;
 
-import lombok.Getter;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -21,7 +19,6 @@ public class StopWatch {
     private static final DecimalFormatSymbols DFS_EUROPE = new DecimalFormatSymbols();
 
     private long msStart = 0;
-    @Getter
     private long msAccumulated = 0;
 
     public StopWatch() {
