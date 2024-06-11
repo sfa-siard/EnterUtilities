@@ -1,3 +1,4 @@
+import java.text.DateFormat
 import java.util.*
 
 plugins {
@@ -38,7 +39,7 @@ tasks.withType(Jar::class) {
         attributes["Implementation-Title"] = "Enter Utilities"
         attributes["Implementation-Version"] = archiveVersion
         attributes["Implementation-Vendor"] = "Swiss Federal Archives, Berne, Switzerland"
-        attributes["Built-Date"] = Date().toLocaleString()
+        attributes["Built-Date"] = DateFormat.getDateInstance().format(Date())
 
     }
 }
