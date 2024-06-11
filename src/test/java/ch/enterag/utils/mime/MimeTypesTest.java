@@ -11,7 +11,8 @@ class MimeTypesTest {
         assertAll(
                 () -> assertEquals("json", MimeTypes.getExtension("application/json")),
                 () -> assertEquals("png", MimeTypes.getExtension("image/png")),
-                () -> assertEquals("bin", MimeTypes.getExtension("invalid/mime-type"))
+                () -> assertEquals("bin", MimeTypes.getExtension("invalid/mime-type")),
+                () -> assertEquals("bin", MimeTypes.getExtension("foobar"))
         );
     }
 }
