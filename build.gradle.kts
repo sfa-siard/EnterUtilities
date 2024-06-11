@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.apache.tika:tika-core:2.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 }
