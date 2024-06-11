@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set TAG-Env
@@ -23,21 +23,21 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
       - name: Show current application version
         run: ./gradlew cV
       - name: Execute Gradle build
         run: ./gradlew build
       - name: Store reports
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: |
             **/build/reports/
             **/build/test-results/
       - name: upload deliverables
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.NAME_TAG }}
           path: build/libs/
