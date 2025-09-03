@@ -1,8 +1,8 @@
-# EnterUtils - SIARD Enter Utilities
+# EnterUtils - SIARD 2.2 Enter Utilities
 This package contains utility classes used by the SIARD Suite.
 
-## Prerequisites
-For building the binaries, Java JDK (1.8 or higher) must be installed. 
+## Getting started (for developers)
+For building the binaries, Java JDK 17 must be installed. 
 
 ### Run all tests
 ```shell
@@ -14,13 +14,19 @@ For building the binaries, Java JDK (1.8 or higher) must be installed.
 ./gradlew clean build
 ```
 
-### Create a release
-This creates a new tag and pushes the tag to main branch.
+### Versioning, tags, and releases
+Versions and tags are managed with the [Axion Release Plugin](https://github.com/allegro/axion-release-plugin) for Gradle.
+
+Short overview:
 ```shell
-./gradlew release
+./gradlew currentVersion  # Shows the current version
+
+./gradlew release         # Creates a new release, adds a tag, and pushes it to remote
 ```
 
+## Documentation
+- [User Manual](https://github.com/sfa-siard/siard-suite/blob/main/docs/user-manual/en/user-manual.adoc)
+- [Software Architecture Document](https://github.com/sfa-siard/siard-suite/blob/main/docs/sad/sad.adoc)
+
 ## Declaration
-Contributions to the codebase have been made with the support of Codeium. Codeium is AI-powered code completion tool, that is trained exclusively on natural language and source code data with [permissive licenses](https://codeium.com/blog/copilot-trains-on-gpl-codeium-does-not ). 
-
-
+Contributions to the codebase have been made with the support of Windsurf. Windsurf is AI-powered code completion tool, that is trained exclusively on natural language and source code data with [permissive licenses](https://windsurf.com/blog/copilot-trains-on-gpl-codeium-does-not). 
