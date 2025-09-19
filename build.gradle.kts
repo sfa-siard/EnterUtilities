@@ -3,7 +3,7 @@ import java.util.*
 
 plugins {
     `java-library`
-    id("pl.allegro.tech.build.axion-release") version "1.14.3"
+    id("pl.allegro.tech.build.axion-release") version "1.20.1"
     id("io.freefair.lombok") version "6.5.0"
 }
 
