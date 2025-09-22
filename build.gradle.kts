@@ -3,8 +3,8 @@ import java.util.*
 
 plugins {
     `java-library`
-    id("pl.allegro.tech.build.axion-release") version "1.14.3"
-    id("io.freefair.lombok") version "6.5.0"
+    id("pl.allegro.tech.build.axion-release") version "1.20.1"
+    id("io.freefair.lombok") version "8.14.2"
 }
 
 group = "ch.admin.bar"
@@ -22,9 +22,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.tika:tika-core:2.9.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    implementation("org.apache.tika:tika-core:3.2.3")
+
+    testImplementation(platform("org.junit:junit-bom:5.13.4"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
