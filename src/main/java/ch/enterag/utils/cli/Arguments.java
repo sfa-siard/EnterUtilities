@@ -107,7 +107,7 @@ public class Arguments {
      * @param optPosition The position in the string where the option name ends.
      */
     private void addArgumentsToOptions(String arg, int optPosition) {
-        String optionName = arg.substring(1, optPosition);
+        String optionName = arg.substring(arg.startsWith("--") ? 2 : 1, optPosition);
         String optionValue = "";
         if (optPosition < arg.length()) {
             if ((arg.charAt(optPosition) == ':') ||
@@ -127,7 +127,7 @@ public class Arguments {
      * @return Index of the position where the option name ends.
      */
     private static int getOptPosition(String arg) {
-        int optPosition = 1;
+        int optPosition = arg.startsWith("--") ? 2 : 1;
         while (optPosition < arg.length() && Character.isLetterOrDigit(arg.charAt(optPosition))) {
             optPosition++;
         }
